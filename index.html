@@ -3,220 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElectroMart Pro | Project by Rashmika & Jyotika</title>
+    <title>ElectroMart Pro | Rashmika & Jyotika</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #003366; --accent: #2ed573; --bg: #f4f7f6; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; transition: 0.3s; padding-bottom: 100px; }
+        :root { 
+            --primary: #003366; 
+            --accent: #2ed573; 
+            --bg-overlay: rgba(244, 247, 246, 0.92);
+            --bg-img: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600'); 
+            --card: #ffffff; --text: #333333; --danger: #e74c3c; 
+            --warning: #f1c40f;
+        }
+        .dark-theme { --bg-overlay: rgba(18, 18, 18, 0.94); --card: #1e1e1e; --text: #ffffff; --primary: #3498db; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card { animation: fadeInUp 0.6s ease backwards; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), var(--bg-img);
+            background-attachment: fixed; background-size: cover; background-position: center;
+            color: var(--text); margin: 0; padding-bottom: 50px; transition: 0.3s; 
+        }
         
-        header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        header { background: var(--card); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
         .logo span { color: var(--accent); }
 
-        /* Search Bar */
-        .search-container { padding: 20px 5%; display: flex; justify-content: center; background: #fff; border-bottom: 1px solid #eee; }
-        .search-bar { width: 100%; max-width: 600px; display: flex; border: 2px solid #f0f0f0; border-radius: 50px; overflow: hidden; transition: 0.3s; }
-        .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,51,102,0.1); }
-        .search-bar input { border: none; padding: 12px 25px; flex: 1; outline: none; font-size: 1rem; }
-        .search-bar button { background: var(--primary); color: white; border: none; padding: 0 25px; cursor: pointer; }
-
-        /* Comparison Section */
-        .compare-section { background: #fff; margin: 20px 5%; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .compare-grid { display: flex; gap: 15px; margin-top: 15px; }
-        select { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #f9f9f9; }
-        #compareResult { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .comp-card { background: #eef2f7; padding: 15px; border-radius: 10px; border-top: 3px solid var(--primary); font-size: 0.9rem; color: #333; line-height: 1.5; }
-
-        /* Product Cards */
-        .product-container { padding: 40px 5%; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        .product-card { background: #fff; padding: 20px; border-radius: 20px; position: relative; text-align: center; border: 1px solid #eee; transition: 0.4s; overflow: hidden; }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        
-        .img-wrapper { overflow: hidden; border-radius: 10px; margin-bottom: 15px; height: 180px; display: flex; align-items: center; justify-content: center; }
-        .product-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.5s; }
-        .product-card:hover .product-img { transform: scale(1.1); }
-
-        .trust-badge { position: absolute; top: 15px; left: 15px; background: #e8f5e9; color: #2e7d32; font-size: 10px; padding: 5px 10px; border-radius: 50px; font-weight: bold; z-index: 10; }
-        .price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin: 5px 0; }
-        .stars { color: #f1c40f; font-size: 0.9rem; margin-bottom: 10px; }
-        .add-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 600; transition: 0.3s; }
-
-        /* Floating Cart */
-        #floating-cart {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150px);
-            background: var(--primary); color: white; padding: 15px 40px; border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 20px; z-index: 2000; transition: 0.5s;
+        .hero { 
+            height: 180px; 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1000'); 
+            background-size: cover; background-position: center; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; margin-bottom: 20px;
         }
-        #floating-cart.active { transform: translateX(-50%) translateY(0); }
-        .toast-count-circle { background: var(--accent); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
-        /* Dark Theme */
-        .dark-theme { background: #121212; color: white; }
-        .dark-theme .product-card, .dark-theme header, .dark-theme .compare-section, .dark-theme .search-container { background: #1e1e1e; border-color: #333; color: white; }
+        .energy-calculator-section {
+            background: var(--card); margin: 0 5% 20px; padding: 25px; border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); text-align: center; border: 2px solid var(--primary);
+            animation: fadeInUp 0.8s ease;
+        }
+        .calc-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; align-items: center; margin-top: 15px; }
+        .input-group { text-align: left; flex: 1; min-width: 150px; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; }
+        .input-group select, .input-group input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
+        .result-container { display: flex; gap: 10px; }
+        .result-box { background: var(--primary); color: white; padding: 10px 20px; border-radius: 15px; min-width: 100px; }
+        .result-box.eco { background: var(--accent); }
+
+        .category-container { padding: 10px 5%; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .cat-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid var(--primary); background: var(--card); color: var(--primary); cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .cat-btn:hover { transform: scale(1.05); }
+        .cat-btn.active { background: var(--primary); color: white; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; padding: 20px 5%; }
+        .product-card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
         
-        footer { text-align: center; padding: 40px; color: #666; background: #fff; margin-top: 50px; }
+        .img-wrapper { height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; border-radius: 10px; }
+        .product-img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.5s; }
+        
+        .price { font-size: 1.4rem; font-weight: 700; color: var(--primary); margin: 5px 0; }
+        
+        /* Prediction Button Style */
+        .predict-tag { 
+            background: #f8f9fa; color: #666; font-size: 0.7rem; padding: 4px 8px; 
+            border-radius: 5px; cursor: pointer; display: inline-block; margin-bottom: 10px;
+            border: 1px dashed #ccc; transition: 0.3s;
+        }
+        .predict-tag:hover { background: var(--warning); color: #000; border-style: solid; }
+
+        .add-btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
+        .add-btn:active { transform: scale(0.95); }
+        .stock-status { font-size: 0.8rem; font-weight: 600; color: var(--accent); display: block; margin-bottom: 5px; }
+
+        .contact-section { background: var(--card); margin: 40px 5%; padding: 40px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .contact-form { display: flex; flex-direction: column; gap: 12px; }
+        .contact-form input, .contact-form textarea { padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; font-family: inherit; }
+        
+        #floating-cart { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150px); background: var(--primary); color: white; padding: 12px 35px; border-radius: 50px; display: flex; align-items: center; gap: 15px; transition: 0.6s; z-index: 2000; }
+        #floating-cart.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">Electro<span>Mart</span></div>
-        <nav>
-            <button onclick="toggleDarkMode()" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🌓</button>
-        </nav>
-        <div id="cart-btn" style="cursor:pointer; font-weight: bold;">
-            🛒 Items: <span id="count" style="color:var(--accent)">0</span>
-        </div>
+        <button onclick="toggleDarkMode()" style="background:none; border:none; cursor:pointer; font-size:1.4rem;">🌓</button>
+        <div id="cart-status">🛒 Items: <span id="count" style="font-weight:bold;">0</span></div>
     </header>
 
-    <div class="search-container">
-        <div class="search-bar">
-            <input type="text" placeholder="Search for TV, Fridge, Laptops...">
-            <button>Search</button>
-        </div>
-    </div>
-
-    <section class="compare-section">
-        <h3>⚡ Smart Gadget Comparison</h3>
-        <div class="compare-grid">
-            <select id="select1" onchange="runCompare()">
-                <option value="">Select Product 1</option>
-                <option value="phone">Smartphone X1</option>
-                <option value="laptop">Ultrabook Pro</option>
-                <option value="watch">Smartwatch Z</option>
-                <option value="fridge">Smart Fridge</option>
-                <option value="washing">Washing Machine</option>
-                <option value="tv">Smart LED TV</option>
-            </select>
-            <select id="select2" onchange="runCompare()">
-                <option value="">Select Product 2</option>
-                <option value="phone">Smartphone X1</option>
-                <option value="laptop">Ultrabook Pro</option>
-                <option value="watch">Smartwatch Z</option>
-                <option value="fridge">Smart Fridge</option>
-                <option value="washing">Washing Machine</option>
-                <option value="tv">Smart LED TV</option>
-            </select>
-        </div>
-        <div id="compareResult"></div>
+    <section class="hero">
+        <h1>Welcome to ElectroMart</h1>
+        <p>Innovation by Rashmika & Jyotika</p>
     </section>
 
-    <main class="product-container">
-        <div class="product-grid">
-            <div class="product-card">
-                <span class="trust-badge">OFFICIAL WARRANTY</span>
-                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400" class="product-img"></div>
-                <h3>Smartphone X1</h3>
-                <div class="stars">★★★★★</div>
-                <p class="price">₹62,999</p>
-                <button class="add-btn">Add to Cart</button>
+    <section class="energy-calculator-section">
+        <h3 style="margin:0; color:var(--primary);">🍀 Eco-Energy Predictor</h3>
+        <div class="calc-grid">
+            <div class="input-group">
+                <label>Appliance</label>
+                <select id="appliance-select" onchange="calculateEco()">
+                    <option value="250">Fridge (250W)</option>
+                    <option value="500">Washer (500W)</option>
+                    <option value="100">Laptop (100W)</option>
+                    <option value="2000">AC (2000W)</option>
+                </select>
             </div>
+            <div class="input-group">
+                <label>Daily Hours</label>
+                <input type="number" id="hours-input" value="8" min="1" max="24" oninput="calculateEco()">
+            </div>
+            <div class="result-container">
+                <div class="result-box"><small>Bill</small><span id="monthly-bill">₹0</span></div>
+                <div class="result-box eco"><small>Trees</small><span id="trees-saved">0.0</span></div>
+            </div>
+        </div>
+    </section>
 
-            <div class="product-card">
-                <span class="trust-badge">BEST SELLER</span>
-                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400" class="product-img"></div>
-                <h3>Ultrabook Pro</h3>
-                <div class="stars">★★★★☆</div>
-                <p class="price">₹98,500</p>
-                <button class="add-btn">Add to Cart</button>
-            </div>
+    <div class="category-container">
+        <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
+        <button class="cat-btn" onclick="filterCat('pc', this)">Laptops</button>
+        <button class="cat-btn" onclick="filterCat('home', this)">Home</button>
+    </div>
 
-            <div class="product-card">
-                <span class="trust-badge">5 STAR ENERGY</span>
-                <div class="img-wrapper"><img src="fridge.jpg" class="product-img"></div>
-                <h3>Smart Fridge</h3>
-                <div class="stars">★★★★★</div>
-                <p class="price">₹30,000</p>
-                <button class="add-btn">Add to Cart</button>
-            </div>
+    <main class="product-grid">
+        <div class="product-card animate-card" data-cat="home" style="animation-delay: 0.1s;">
+            <span class="stock-status">Available: <span class="stock-num">2</span></span>
+            <div class="img-wrapper"><img src="fridge.jpg" class="product-img"></div>
+            <h3>Premium Fridge</h3>
+            <div class="predict-tag" onclick="predictPrice('Premium Fridge')">📉 Price Insight</div>
+            <p class="price">₹32,000</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
 
-            <div class="product-card">
-                <span class="trust-badge">4K ULTRA HD</span>
-                <div class="img-wrapper"><img src="tv.jpg" class="product-img"></div>
-                <h3>Smart LED TV</h3>
-                <div class="stars">★★★★☆</div>
-                <p class="price">₹50,000</p>
-                <button class="add-btn">Add to Cart</button>
-            </div>
+        <div class="product-card animate-card" data-cat="home" style="animation-delay: 0.2s;">
+            <span class="stock-status">Available: <span class="stock-num">4</span></span>
+            <div class="img-wrapper"><img src="whasing.jpg" class="product-img"></div>
+            <h3>Auto Washer</h3>
+            <div class="predict-tag" onclick="predictPrice('Auto Washer')">📉 Price Insight</div>
+            <p class="price">₹28,000</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
 
-            <div class="product-card">
-                <span class="trust-badge">FULLY AUTOMATIC</span>
-                <div class="img-wrapper"><img src="whasing.jpg" class="product-img"></div>
-                <h3>Washing Machine</h3>
-                <div class="stars">★★★★★</div>
-                <p class="price">₹25,000</p>
-                <button class="add-btn">Add to Cart</button>
-            </div>
+        <div class="product-card animate-card" data-cat="pc" style="animation-delay: 0.3s;">
+            <span class="stock-status">Available: <span class="stock-num">1</span></span>
+            <div class="img-wrapper"><img src="leptop2.jpg" class="product-img"></div>
+            <h3>Pro Laptop V2</h3>
+            <div class="predict-tag" onclick="predictPrice('Pro Laptop V2')">📉 Price Insight</div>
+            <p class="price">₹50,000</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
 
-            <div class="product-card">
-                <span class="trust-badge">FITNESS TRACKER</span>
-                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="product-img"></div>
-                <h3>Smartwatch Z</h3>
-                <div class="stars">★★★★★</div>
-                <p class="price">₹18,000</p>
-                <button class="add-btn">Add to Cart</button>
-            </div>
+        <div class="product-card animate-card" data-cat="pc" style="animation-delay: 0.4s;">
+            <span class="stock-status">Available: <span class="stock-num">8</span></span>
+            <div class="img-wrapper"><img src="leptop1.jpg" class="product-img"></div>
+            <h3>Smart Laptop X</h3>
+            <div class="predict-tag" onclick="predictPrice('Smart Laptop X')">📉 Price Insight</div>
+            <p class="price">₹61,000</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card animate-card" data-cat="gadget" style="animation-delay: 0.5s;">
+            <span class="stock-status">Available: <span class="stock-num">5</span></span>
+            <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1592890288564-76628a30a657?w=400" class="product-img"></div>
+            <h3>Smartphone X1</h3>
+            <div class="predict-tag" onclick="predictPrice('Smartphone X1')">📉 Price Insight</div>
+            <p class="price">₹62,999</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card animate-card" data-cat="home" style="animation-delay: 0.6s;">
+            <span class="stock-status">Available: <span class="stock-num">3</span></span>
+            <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400" class="product-img"></div>
+            <h3>Smart 4K TV</h3>
+            <div class="predict-tag" onclick="predictPrice('Smart 4K TV')">📉 Price Insight</div>
+            <p class="price">₹45,000</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+        </div>
+
+        <div class="product-card animate-card" data-cat="gadget" style="animation-delay: 0.7s;">
+            <span class="stock-status">Available: <span class="stock-num">6</span></span>
+            <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" class="product-img"></div>
+            <h3>Premium Headphone</h3>
+            <div class="predict-tag" onclick="predictPrice('Premium Headphone')">📉 Price Insight</div>
+            <p class="price">₹4,500</p>
+            <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
         </div>
     </main>
 
+    <section class="contact-section">
+        <div class="contact-info">
+             <p><b>Have questions about your energy bill or products? Our experts are here to help!</b></p>
+            <h2>📞 Contact Us</h2>
+            <p><strong>Rashmika Rathva & Jyotika Rathva</strong></p>
+          
+            <p>Email: rathvarashmika965@gmail.com</p>
+            <p><strong>📱 WhatsApp:</strong> +91 9512946697</p>
+        </div>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!');">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="3" placeholder="Message" required></textarea>
+            <button type="submit" class="add-btn">Send Message</button>
+        </form>
+    </section>
+
     <div id="floating-cart">
-        <div class="toast-count-circle" id="floating-count">0</div>
-        <span>Items added!</span>
-        <button style="background:white; color:var(--primary); border:none; padding:8px 15px; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="alert('Proceeding to Payment...')">Checkout Now</button>
+        <span id="f-count" style="background:white; color:var(--primary); padding:2px 8px; border-radius:10px; font-weight:bold;">0</span>
+        <span>Items in Cart</span>
+        <button onclick="alert('Payment Successful!')" style="background:var(--accent); color:white; border:none; padding:5px 15px; border-radius:20px; cursor:pointer; font-weight:bold;">Pay Now</button>
     </div>
 
-    <footer>
-        <p>© 2026 ElectroMart | Designed with ❤️ by <strong>Rashmika Rathva & Jyotika Rathva</strong></p>
-    </footer>
-
     <script>
-        let count = 0;
-        const countDisplay = document.getElementById('count');
-        const floatingCart = document.getElementById('floating-cart');
-        const floatingCount = document.getElementById('floating-count');
+        let cartCount = 0;
 
-        // Cart logic
-        document.querySelectorAll('.add-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                count++;
-                countDisplay.innerText = count;
-                floatingCount.innerText = count;
-                floatingCart.classList.add('active');
-                
-                btn.innerText = "✓ Added";
-                btn.style.background = "#2ed573";
-                setTimeout(() => {
-                    btn.innerText = "Add to Cart";
-                    btn.style.background = "#003366";
-                }, 1500);
-            });
-        });
+        // NEW: Price Drop Predictor Logic
+        function predictPrice(name) {
+            const predictions = [
+                "📉 Price likely to drop by 10% next week! (Wait)",
+                "🔥 Best time to buy! Prices may rise soon.",
+                "📊 Stable price. No major changes expected.",
+                "🎁 Upcoming festive discount: ₹2,000 OFF!"
+            ];
+            const randomMsg = predictions[Math.floor(Math.random() * predictions.length)];
+            alert("Price Predictor for " + name + ":\n\n" + randomMsg);
+        }
 
-        // Comparison Data
-        const data = {
-            phone: "📱 6.7' AMOLED | 12GB RAM | 108MP Camera",
-            laptop: "💻 14' M2 Chip | 16GB RAM | 512GB SSD",
-            watch: "⌚ Retina Display | GPS | Heart Rate Monitor",
-            fridge: "❄️ 350L Capacity | Digital Inverter | Smart Cooling",
-            washing: "🧺 8kg Front Load | Steam Wash | 1400 RPM",
-            tv: "📺 55' 4K UHD | Android TV | Dolby Atmos Audio"
-        };
+        function calculateEco() {
+            const w = document.getElementById('appliance-select').value;
+            const h = document.getElementById('hours-input').value;
+            const units = (w * h * 30) / 1000;
+            document.getElementById('monthly-bill').innerText = "₹" + Math.round(units * 8);
+            document.getElementById('trees-saved').innerText = (units * 0.04).toFixed(1) + " 🌳";
+        }
 
-        function runCompare() {
-            const p1 = document.getElementById('select1').value;
-            const p2 = document.getElementById('select2').value;
-            const res = document.getElementById('compareResult');
-            if(p1 && p2) {
-                res.innerHTML = `
-                    <div class="comp-card"><strong>Product A:</strong><br>${data[p1]}</div>
-                    <div class="comp-card"><strong>Product B:</strong><br>${data[p2]}</div>
-                `;
+        window.onload = calculateEco;
+
+        function addToCart(btn) {
+            const stockSpan = btn.parentElement.querySelector('.stock-num');
+            let stock = parseInt(stockSpan.innerText);
+            if (stock > 0) {
+                stock--; stockSpan.innerText = stock; cartCount++;
+                document.getElementById('count').innerText = cartCount;
+                document.getElementById('f-count').innerText = cartCount;
+                document.getElementById('floating-cart').classList.add('active');
+                btn.innerText = "✓ Added"; btn.style.background = "#2ed573";
+                setTimeout(() => { if(stock > 0) { btn.innerText = "Add to Cart"; btn.style.background = "#003366"; } }, 1000);
             }
         }
 
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-theme');
+        function toggleDarkMode() { document.body.classList.toggle('dark-theme'); }
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.style.display = (cat === 'all' || card.getAttribute('data-cat') === cat) ? "block" : "none";
+                if (card.style.display === "block") {
+                    card.style.animation = 'none';
+                    card.offsetHeight; 
+                    card.style.animation = null;
+                }
+            });
         }
     </script>
 </body>
